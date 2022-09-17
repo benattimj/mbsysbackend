@@ -1,6 +1,6 @@
 # mbsys
 
 Um sistema que estou criando atualmente em
- - Java bakc end 
+ - Java back end 
  - Ionic e React de Front end.
 ---------------------------------------------------------
