@@ -7,17 +7,18 @@ import org.springframework.stereotype.Service;
 
 import com.mbsystems.mysts.domain.Categoria;
 import com.mbsystems.mysts.repositories.CategoriaRepository;
+import com.mbsystems.mysts.services.exceptions.ObjectNotFoundException;
 
 @Service
 public class CategoriaService {
-	
+
 	@Autowired
 	private CategoriaRepository repo;
 
-	public Categoria find(Integer id) { 
+	public Optional<Categoria> find(Integer id) { 
 		 Optional<Categoria> obj = repo.findById(id); 
-		return obj.orElse(null); 
+		 return Optional.ofNullable(obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado! ID:" + id)));
 	}
 
-	
+
 }
