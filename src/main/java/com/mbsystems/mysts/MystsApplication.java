@@ -13,6 +13,7 @@ import com.mbsystems.mysts.domain.Cidade;
 import com.mbsystems.mysts.domain.Cliente;
 import com.mbsystems.mysts.domain.Endereco;
 import com.mbsystems.mysts.domain.Estado;
+import com.mbsystems.mysts.domain.ItemPedido;
 import com.mbsystems.mysts.domain.Pagamento;
 import com.mbsystems.mysts.domain.PagamentoComBoleto;
 import com.mbsystems.mysts.domain.PagamentoComCartao;
@@ -25,6 +26,7 @@ import com.mbsystems.mysts.repositories.CidadeRepository;
 import com.mbsystems.mysts.repositories.ClienteRepository;
 import com.mbsystems.mysts.repositories.EnderecoRepository;
 import com.mbsystems.mysts.repositories.EstadoRepository;
+import com.mbsystems.mysts.repositories.ItemPedidoRepository;
 import com.mbsystems.mysts.repositories.PagamentoRepository;
 import com.mbsystems.mysts.repositories.PedidoRepository;
 import com.mbsystems.mysts.repositories.ProdutoRepository;
@@ -49,7 +51,8 @@ public class MystsApplication implements CommandLineRunner {
 	private PedidoRepository pedidoRepository;
 	@Autowired
 	private PagamentoRepository pagamentoRepository;
-	
+	@Autowired
+	private ItemPedidoRepository itemPedidoRepository;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(MystsApplication.class, args);
@@ -116,6 +119,21 @@ public class MystsApplication implements CommandLineRunner {
 		
 		pedidoRepository.saveAll(Arrays.asList(ped1,ped2));
 		pagamentoRepository.saveAll(Arrays.asList(pagto1,pagto2));
+		
+		ItemPedido ip1 = new ItemPedido(ped1,p1,0.00,1,2000.00);
+		ItemPedido ip2 = new ItemPedido(ped1,p3,0.00,2, 80.00);
+		ItemPedido ip3 = new ItemPedido(ped2, p2, 100.00, 1, 800.00);
+		
+		ped1.getItens().addAll(Arrays.asList(ip1,ip2));
+		ped2.getItens().addAll(Arrays.asList(ip3));
+		
+		
+		p1.getItens().addAll(Arrays.asList(ip1));
+		p2.getItens().addAll(Arrays.asList(ip3));
+		p3.getItens().addAll(Arrays.asList(ip2));
+		
+		itemPedidoRepository.saveAll(Arrays.asList(ip1,ip2,ip3));
+		
 		
 		
 	
