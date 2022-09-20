@@ -2,7 +2,6 @@ package com.mbsystems.mysts.services;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.function.ObjDoubleConsumer;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -63,5 +62,6 @@ public class CategoriaService {
 	public Categoria fromDTO(CategoriaDTO objDto) {
 		return new Categoria (objDto.getId(), objDto.getNome());
 	}
+
 	
 }
