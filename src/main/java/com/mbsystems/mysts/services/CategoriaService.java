@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import com.mbsystems.mysts.domain.Categoria;
 import com.mbsystems.mysts.dto.CategoriaDTO;
 import com.mbsystems.mysts.repositories.CategoriaRepository;
+import com.mbsystems.mysts.services.exceptions.DataIntegrityException;
 import com.mbsystems.mysts.services.exceptions.ObjectNotFoundException;
 
 @Service
@@ -35,33 +36,32 @@ public class CategoriaService {
 	public Categoria update(Categoria obj) {
 		find(obj.getId());
 		return repo.save(obj);
-
 	}
 
 	public void delete(Integer id) {
 		find(id);
 		try {
-		repo.deleteById(id);
-	}
+			repo.deleteById(id);
+		}
 		catch (DataIntegrityViolationException e) {
-			throw new DataIntegrityViolationException("Não é possivel excluir uma categoria que possui produtos!");
+			throw new DataIntegrityException("Não é possível excluir uma categoria que possui produtos");
 		}
 	}
 	
-	public List<Categoria> findAll(){
+	public List<Categoria> findAll() {
 		return repo.findAll();
 	}
 	
 	public Page<Categoria> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
-		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction),orderBy);
+		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
 		return repo.findAll(pageRequest);
-			
-		
 	}
 	
 	public Categoria fromDTO(CategoriaDTO objDto) {
-		return new Categoria (objDto.getId(), objDto.getNome());
+		return new Categoria(objDto.getId(), objDto.getNome());
 	}
 
-	
+	private void updateData(Categoria newObj, Categoria obj) {
+		newObj.setNome(obj.getNome());
+	}
 }
