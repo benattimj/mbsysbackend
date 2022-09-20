@@ -2,6 +2,7 @@ package com.mbsystems.mysts.services;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.function.ObjDoubleConsumer;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -11,6 +12,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.mbsystems.mysts.domain.Categoria;
+import com.mbsystems.mysts.dto.CategoriaDTO;
 import com.mbsystems.mysts.repositories.CategoriaRepository;
 import com.mbsystems.mysts.services.exceptions.ObjectNotFoundException;
 
@@ -56,6 +58,10 @@ public class CategoriaService {
 		return repo.findAll(pageRequest);
 			
 		
+	}
+	
+	public Categoria fromDTO(CategoriaDTO objDto) {
+		return new Categoria (objDto.getId(), objDto.getNome());
 	}
 	
 }
