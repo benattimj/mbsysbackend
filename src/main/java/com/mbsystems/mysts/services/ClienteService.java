@@ -16,7 +16,6 @@ import com.mbsystems.mysts.domain.Endereco;
 import com.mbsystems.mysts.domain.enums.TipoCliente;
 import com.mbsystems.mysts.dto.ClienteDTO;
 import com.mbsystems.mysts.dto.ClienteNewDTO;
-import com.mbsystems.mysts.repositories.CidadeRepository;
 import com.mbsystems.mysts.repositories.ClienteRepository;
 import com.mbsystems.mysts.repositories.EnderecoRepository;
 
@@ -25,9 +24,6 @@ public class ClienteService {
 
 	@Autowired
 	private ClienteRepository repo;
-
-	@Autowired
-	private CidadeRepository cidadeRepository;
 	
 	@Autowired
 	private EnderecoRepository enderecoRepository;
@@ -56,7 +52,7 @@ public class ClienteService {
 		try {
 			repo.deleteById(id);
 		} catch (DataIntegrityViolationException e) {
-			throw new DataIntegrityViolationException("Não é possivel excluir porque há entidades relacionadas!");
+			throw new DataIntegrityViolationException("Não é possivel excluir porque há pedidos relacionadas!");
 		}
 	}
 
