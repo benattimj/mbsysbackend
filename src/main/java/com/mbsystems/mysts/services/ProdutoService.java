@@ -23,12 +23,11 @@ public class ProdutoService {
 	
 	@Autowired
 	private CategoriaRepository categoriaRepository;
-
-	public Optional<Produto> find(Integer id) {
+	
+	public Produto find(Integer id) {
 		Optional<Produto> obj = repo.findById(id);
-		return Optional
-				.ofNullable(obj.orElseThrow(() -> 
-			new ObjectNotFoundException("Objeto não encontrado! ID:" + id)));
+		return obj.orElseThrow(() -> new ObjectNotFoundException(
+				"Objeto não encontrado! Id: " + id + ", Tipo: " + Produto.class.getName()));
 	}
 
 	public Page<Produto> search(String nome, List<Integer> ids, Integer page, Integer linesPerPage, String orderBy, String direction) {
@@ -36,11 +35,6 @@ public class ProdutoService {
 		List<Categoria> categorias = categoriaRepository.findAllById(ids);
 		return repo.findDistinctByNomeContainingAndCategoriasIn(nome, categorias, pageRequest);	
 	}
-	
-	
-	
-	
-	
 	
 	
 }
