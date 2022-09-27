@@ -2,7 +2,6 @@ package com.mbsystems.mysts.resources;
 
 import java.net.URI;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;
@@ -18,9 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.mbsystems.mysts.domain.Categoria;
 import com.mbsystems.mysts.domain.Cliente;
-import com.mbsystems.mysts.dto.CategoriaDTO;
 import com.mbsystems.mysts.dto.ClienteDTO;
 import com.mbsystems.mysts.dto.ClienteNewDTO;
 import com.mbsystems.mysts.services.ClienteService;
