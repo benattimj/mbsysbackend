@@ -13,7 +13,6 @@ import com.mbsystems.mysts.domain.enums.EstadoPagamento;
 import com.mbsystems.mysts.repositories.ItemPedidoRepository;
 import com.mbsystems.mysts.repositories.PagamentoRepository;
 import com.mbsystems.mysts.repositories.PedidoRepository;
-import com.mbsystems.mysts.repositories.ProdutoRepository;
 import com.mbsystems.mysts.services.exceptions.ObjectNotFoundException;
 
 @Service
@@ -36,6 +35,9 @@ public class PedidoService {
 	
 	@Autowired
 	private ClienteService clienteService;
+	
+	@Autowired
+	private EmailService emailService;
 	
 	
 	
@@ -66,7 +68,7 @@ public class PedidoService {
 			ip.setPedido(obj);
 		}
 			itemPedidoRepository.saveAll(obj.getItens());
-			System.out.println(obj);
+			emailService.sendOrderConfirmationEmail(obj);
 			return obj;
 	}
 	
