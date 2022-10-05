@@ -14,11 +14,14 @@ import org.springframework.stereotype.Service;
 import com.mbsystems.mysts.domain.Cidade;
 import com.mbsystems.mysts.domain.Cliente;
 import com.mbsystems.mysts.domain.Endereco;
+import com.mbsystems.mysts.domain.enums.Perfil;
 import com.mbsystems.mysts.domain.enums.TipoCliente;
 import com.mbsystems.mysts.dto.ClienteDTO;
 import com.mbsystems.mysts.dto.ClienteNewDTO;
 import com.mbsystems.mysts.repositories.ClienteRepository;
 import com.mbsystems.mysts.repositories.EnderecoRepository;
+import com.mbsystems.mysts.security.UserSS;
+import com.mbsystems.mysts.services.exceptions.AuthorizationException;
 
 @Service
 public class ClienteService {
@@ -33,7 +36,13 @@ public class ClienteService {
 	private EnderecoRepository enderecoRepository;
 	
 
-	public Cliente find(Integer id) {
+	public Cliente find(Integer id) { 
+		
+		UserSS user =  UserService.authenticated();
+		if(user == null || user.hasRole(Perfil.ADMIN) && !id.equals(user.getId())) {
+			throw new AuthorizationException("Acesso negado");
+			 	}
+			
 		Optional<Cliente> obj = repo.findById(id);
 		return obj.orElse(null);
 	}
